@@ -535,8 +535,11 @@ mod tests {
         let dir = Path::new("data/tests/kif");
         for entry in dir.read_dir()? {
             // Parse and convert KIF to JKF, and serialize to Value
+            // A .kifu is the UTF-8 copy of the .kif beside it, so it is checked
+            // against the same JSON.
             let mut path = entry?.path();
-            if path.extension() != Some(OsStr::new("kif")) {
+            let ext = path.extension();
+            if ext != Some(OsStr::new("kif")) && ext != Some(OsStr::new("kifu")) {
                 continue;
             }
             let jkf = match parse_kif_file(&path) {
@@ -562,8 +565,11 @@ mod tests {
         let dir = Path::new("data/tests/ki2");
         for entry in dir.read_dir()? {
             // Parse and convert KI2 to JKF, and serialize to Value
+            // A .ki2u is the UTF-8 copy of the .ki2 beside it, so it is checked
+            // against the same JSON.
             let mut path = entry?.path();
-            if path.extension() != Some(OsStr::new("ki2")) {
+            let ext = path.extension();
+            if ext != Some(OsStr::new("ki2")) && ext != Some(OsStr::new("ki2u")) {
                 continue;
             }
             let jkf = match parse_ki2_file(&path) {
